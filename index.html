@@ -185,6 +185,7 @@ function lanzarCorazones() {
     }
 }
 
+contador = 0;
 // 😈 Botón NO huye
 noBtn.addEventListener("click", () => {
     const maxX = window.innerWidth - noBtn.offsetWidth;
@@ -199,6 +200,10 @@ noBtn.addEventListener("click", () => {
 
     scale += 0.15;
     yesBtn.style.transform = `scale(${scale})`;
+    contador++;
+    if (contador == 10) {
+        alert("¡Vamos, dale q siii! 😘");
+    }
 });
 
 // 💖 Botón SÍ
