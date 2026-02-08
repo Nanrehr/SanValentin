@@ -6,49 +6,54 @@
 <title>San Valentín 💛</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    body {
-        margin: 0;
-        height: 100vh;
-        font-family: Arial, sans-serif;
-        background: url("friends-bf-fs.gif") center / cover no-repeat fixed;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background: url("friends-bf-fs.gif") center / cover no-repeat fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
 
-    .overlay {
-        background: rgba(0, 0, 0, 0.55);
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
+.overlay {
+    background: rgba(0, 0, 0, 0.55);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
-    .card {
-        background: white;
-        border-radius: 20px;
-        padding: 25px 20px;
-        max-width: 360px;
-        width: 100%;
-        text-align: center;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-    }
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px 20px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
 
-    h1 {
-        color: #ff4d6d;
-        margin-bottom: 10px;
-    }
+h1 {
+    color: #ff4d6d;
+    margin-bottom: 10px;
+}
 
-    p {
-        font-size: 17px;
-        margin-bottom: 25px;
-    }
+h2 {
+    margin: 10px 0;
+}
+
+p {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
 
 .buttons {
     display: flex;
@@ -57,40 +62,55 @@
     margin-top: 20px;
 }
 
-    button {
-        width: 130px;
-        padding: 12px;
-        font-size: 18px;
-        border-radius: 30px;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s ease;
-    }
+button {
+    width: 130px;
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
 
-    #yes {
-        background: #ff4d6d;
-        color: white;
-        z-index: 2;
-    }
+#yes {
+    background: #ff4d6d;
+    color: white;
+}
 
-    #no {
-        background: #ccc;
-        color: #333;
-    }
+#no {
+    background: #ccc;
+    color: #333;
+}
 
-    .message {
-        display: none;
-        margin-top: 20px;
-        font-size: 18px;
-        color: #ff4d6d;
-    }
+.message {
+    display: none;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #ff4d6d;
+}
 
-    .gif {
-        display: none;
-        margin-top: 15px;
-        width: 100%;
-        border-radius: 15px;
+.gif {
+    display: none;
+    margin-top: 15px;
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* ❤️ CONFETI */
+.heart {
+    position: fixed;
+    top: -20px;
+    font-size: 26px;
+    animation: fall linear forwards;
+    z-index: 9999;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
     }
+}
 </style>
 </head>
 
@@ -100,7 +120,7 @@
     <div class="card">
         <h1>Hola novieta 💖</h1>
         <h2>¿Quieres ser mi San Valentín?</h2>
-        <p> 💞 UwU 💞UwU 💞 UwU💞 UwU 💞</p>
+        <p>💞 UwU 💞 UwU 💞 UwU 💞</p>
 
         <div class="buttons">
             <button id="yes">Sí 💖</button>
@@ -108,8 +128,8 @@
         </div>
 
         <div class="message" id="message">
-            Tenemos la cita el Sabadoooo<br>
-                             Te amo ❤️
+            Tenemos la cita el sábadoooo 😏<br>
+            Te amo ❤️
         </div>
 
         <img src="spongebob-hooray.gif" class="gif" id="celebration">
@@ -118,39 +138,52 @@
 </div>
 
 <script>
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
-    const message = document.getElementById("message");
-    const music = document.getElementById("music");
-    const celebration = document.getElementById("celebration");
-    const hearts = document.getElementById("hearts");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const message = document.getElementById("message");
+const celebration = document.getElementById("celebration");
+const hearts = document.getElementById("hearts");
 
-    let scale = 1;
+let scale = 1;
 
-    noBtn.addEventListener("click", () => {
-        const maxX = window.innerWidth - noBtn.offsetWidth;
-        const maxY = window.innerHeight - noBtn.offsetHeight;
+// ❤️ Confeti
+function lanzarCorazones() {
+    for (let i = 0; i < 40; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+    }
+}
 
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
+// 😈 Botón NO huye
+noBtn.addEventListener("click", () => {
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
 
-        noBtn.style.position = "fixed";
-        noBtn.style.left = `${x}px`;
-        noBtn.style.top = `${y}px`;
-        
-        // El botón SÍ se hace más grande 😈
-        scale += 0.20;
-        yesBtn.style.transform = `scale(${scale})`;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
 
-    });
+    noBtn.style.position = "fixed";
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
 
-    yesBtn.addEventListener("click", () => {
-        message.style.display = "block";
-        celebration.style.display = "block";
-        hearts.style.display = "block";
-        yesBtn.style.display = "none";
-        noBtn.style.display = "none";
-        });
+    scale += 0.2;
+    yesBtn.style.transform = `scale(${scale})`;
+});
+
+// 💖 Botón SÍ
+yesBtn.addEventListener("click", () => {
+    message.style.display = "block";
+    celebration.style.display = "block";
+    hearts.style.display = "block";
+    lanzarCorazones();
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+});
 </script>
 
 </body>
