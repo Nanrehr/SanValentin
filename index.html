@@ -198,12 +198,17 @@ noBtn.addEventListener("click", () => {
     noBtn.style.left = `${x}px`;
     noBtn.style.top = `${y}px`;
 
-    scale += 0.15;
+    scale += 0.3;
     yesBtn.style.transform = `scale(${scale})`;
     contador++;
     if (contador == 10) {
         alert("¡Vamos, dale q siii! 😘");
     }
+    if (contador == 15) {
+        alert("Nada, ahora si o si aceptas la proposición 😏");
+        noBtn.style.display = "none";
+    }
+
 });
 
 // 💖 Botón SÍ
@@ -212,7 +217,9 @@ yesBtn.addEventListener("click", () => {
     celebration.style.display = "block";
     hearts.style.display = "block";
     lanzarCorazones();
-    yesBtn.style.display = "none";
+
+    scale = 1;
+    yesBtn.style.transform = "scale(1)";
     noBtn.style.display = "none";
 });
 </script>
